@@ -666,8 +666,6 @@ function openDetail(id){
   history.replaceState(null,'','#product-'+id);
 }
 function closeDetail(){document.getElementById('detailOverlay').classList.remove('open');document.getElementById('detailBack').classList.remove('show');document.body.style.overflow='';history.replaceState(null,'',location.pathname);}
-// ハッシュURLから商品詳細を開く
-window.addEventListener('load',function(){var m=location.hash.match(/^#product-(\d+)$/);if(m){var id=parseInt(m[1]);setTimeout(function(){openDetail(id);},500);}});
 
 function addToCart(id){const p=P.find(x=>x.id===id);const e=cart.find(c=>c.id===id);if(e)e.qty++;else cart.push({...p,qty:1});updateCart();showToast(`${p.name} をカートに追加しました`);}
 function removeFromCart(id){cart=cart.filter(c=>c.id!==id);updateCart();}
@@ -711,7 +709,20 @@ function closePage(name){
 function toggleFaq(el){el.parentElement.classList.toggle('open');}
 
 window.addEventListener('scroll',()=>{document.getElementById('header').classList.toggle('scrolled',window.scrollY>20);});
-window.addEventListener('DOMContentLoaded',()=>{renderProducts();setTimeout(()=>document.getElementById('loading-screen').classList.add('hide'),2200);});
+window.addEventListener('DOMContentLoaded',()=>{renderProducts();var hasProduct=location.hash.match(/^#product-(\d+)$/);if(hasProduct){document.getElementById('loading-screen').classList.add('hide');setTimeout(function(){openDetail(parseInt(hasProduct[1]));},100);}else{setTimeout(()=>document.getElementById('loading-screen').classList.add('hide'),2200);}});
+</script>
+<!-- LIENS BOT チャットウィジェット -->
+<script>
+  (function() {
+    var script = document.createElement('script');
+    script.src = 'https://app.liens-web.com/widget.js?v=1774050076794';
+    script.setAttribute('data-bot-id', 'cmmytgi4i000j4301axt1cacu');
+    script.setAttribute('data-api-url', 'https://app.liens-web.com');
+    script.setAttribute('data-color', '#4F46E5');
+    script.setAttribute('data-position', 'bottom-right');
+    script.defer = true;
+    document.head.appendChild(script);
+  })();
 </script>
 </body>
 </html>
