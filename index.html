@@ -663,8 +663,11 @@ function openDetail(id){
   document.getElementById('detailBack').classList.add('show');
   document.getElementById('detailOverlay').scrollTop=0;
   document.body.style.overflow='hidden';
+  history.replaceState(null,'','#product-'+id);
 }
-function closeDetail(){document.getElementById('detailOverlay').classList.remove('open');document.getElementById('detailBack').classList.remove('show');document.body.style.overflow='';}
+function closeDetail(){document.getElementById('detailOverlay').classList.remove('open');document.getElementById('detailBack').classList.remove('show');document.body.style.overflow='';history.replaceState(null,'',location.pathname);}
+// ハッシュURLから商品詳細を開く
+window.addEventListener('load',function(){var m=location.hash.match(/^#product-(\d+)$/);if(m){var id=parseInt(m[1]);setTimeout(function(){openDetail(id);},500);}});
 
 function addToCart(id){const p=P.find(x=>x.id===id);const e=cart.find(c=>c.id===id);if(e)e.qty++;else cart.push({...p,qty:1});updateCart();showToast(`${p.name} をカートに追加しました`);}
 function removeFromCart(id){cart=cart.filter(c=>c.id!==id);updateCart();}
